@@ -1,4 +1,4 @@
-package dayPlanner;
+package commands;
 
 public interface Command {
 	
