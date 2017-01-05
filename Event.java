@@ -2,78 +2,56 @@ package dayPlanner;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import enums.EventMarker;
 public class Event {
-	private String type; // meeting or task
-	private String marker; // public confidential private
-	private String date; // yyyyMMddhhmmss
-	private String description; 
-	private String name;
+	private String eventType; // meeting or task
+	private String eventDate; // yyyyMMddhhmmss
+	private String eventName;
+	private String eventDescription;
+	private EventMarker marker; 
+	
 
 
 
 	public Event() {
-		this.name=Event.setName();
-		this.type = Event.setType();
-		this.marker = Event.setMarker();
-		this.date=Event.setDate();
-		this.description=Event.setDescription();
+		this.marker = Event.markerValidation();
+	}
+	
+	
+	
+public static EventMarker markerValidation(){
+Scanner scan=new Scanner(System.in);
+int option =0;
+EventMarker marker= EventMarker.CONFIDENTIAL;
+while(option!=1 || option!=2 || option !=3){
+	System.out.println("How would you like to mark the event?");
+	System.out.println("1. Public");
+	System.out.println("2. Confidential");
+	System.out.println("3. Private");
+	option=scan.nextInt();
+	switch(option){
+	case 1:
+		EventMarker publicMarker=EventMarker.PUBLIC;
+		return publicMarker;
+
+	case 2:
+		EventMarker confidentialMarker=EventMarker.CONFIDENTIAL;
+		return confidentialMarker;
+	case 3:
+		EventMarker privateMarker=EventMarker.PRIVATE;
+		return privateMarker;
+	default:
+		System.out.println("No such option");
+		break;
+	}
+	
+}	return marker;
+
+
 	}
 
 
-	public static String setName() {
-		Scanner scan= new Scanner(System.in);
-		System.out.println("What is the name of te event?");
-		String name=scan.nextLine();
-		return name;
-	}
-	public static String setType() {
-		int option=0;
-		Scanner scan = new Scanner(System.in);
-		String type="";
-
-		while(option!=1 || option!=2){
-			System.out.println("What type is the event?");
-			System.out.println("1. Meeting");
-			System.out.println("2. Task");
-			option=scan.nextInt();
-			switch (option) {
-			case 1:
-				return "Meeting";
-			case 2:
-				return "Task";
-			default:
-				System.out.println("No such option");
-				break;
-			}
-		}
-		return type;
-	}
-
-	public static String setMarker() {
-		int option =0;
-		Scanner scan=new Scanner(System.in);
-		String marker="";
-		while(option!=1 || option!=2 || option !=3){
-			System.out.println("How would you like to mark the event?");
-			System.out.println("1. Public");
-			System.out.println("2. Confidential");
-			System.out.println("3. Private");
-			option=scan.nextInt();
-			switch(option){
-			case 1:
-				return "Public";
-			case 2:
-				return "Confidential";
-			case 3:
-				return "Private";
-			default:
-				System.out.println("No such option");
-				break;
-			}
-
-		}
-		return marker;
-	}
 	public static String setDate() {
 		Scanner scan= new Scanner(System.in);
 		final String DATE_PATTERN = "(?:(?:(?:(?:(?:[13579][26]"
@@ -98,29 +76,20 @@ public class Event {
 
 	}
 
-	public static String setDescription() {
-		Scanner scan=new Scanner(System.in);
-		System.out.println("How would you describe this event?");
-		String description;
-		return description=scan.nextLine();
-	}
+
+	
 
 	public String getDescription() {
-		return description;
+		return eventDescription;
 	}
 
-	public String getMarker() {
-		return marker;
-	}
-	public String getType() {
-		return type;
-	}
 	public String getDate() {
-		return date;
+		return eventDate;
 	}
 	public String getName() {
-		return name;
+		return eventName;
 	}
+
 }
 
 
