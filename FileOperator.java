@@ -9,81 +9,93 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import exceptions.NoSuchEventException;
 
 public class FileOperator {
+	public static final String FILE="C://Users//admin 231116//Desktop//DATABASE.txt";
 
-	//       Employee emp1=gson.fromJson(empJson, Employee.class); 	
-	//       
-	//      System.out.println(emp1.getAge());
-	// 	}
-	ArrayList<Event> arrayListOfEvents =new ArrayList<Event>();
-	public static void readJson(){
-		Gson gson = new Gson();
-		BufferedReader buffReader=null;
-		String textFromFile="";
+
+	public ArrayList<Event> readJson(){
+		ArrayList<Event> listFromFile = new ArrayList<>();
+		File file = new File(FILE);
 		try{
-			buffReader=new BufferedReader(new FileReader("C://Users//admin 231116//Desktop//DATABASE.txt"));
-			String currentLine=buffReader.readLine();
-			while(currentLine!=null){
-				textFromFile=textFromFile + "" + currentLine;
-				currentLine=buffReader.readLine();
+			BufferedReader buffReader = new BufferedReader(new FileReader(FILE));
+			String line;
+			Gson gson = new Gson();
+			java.lang.reflect.Type type = new TypeToken<ArrayList<Event>>(){} .getType();
+			while((line=buffReader.readLine())!=null){
+				listFromFile.addAll(gson.fromJson(line, type));
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (buffReader != null)buffReader.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		String[] jsonStrings=textFromFile.split("\\*");
 
-		Event event1=gson.fromJson(jsonStrings[1], Event.class);
-		//System.out.println(event1.getEventName());
-		
-		
+			buffReader.close();
 
-	}
-
-
-
-
-
-	public static void writeJson(){
-		Gson gson=new Gson();
-		ArrayList<Event> arrayListOfEvents =new ArrayList<Event>();
-		arrayListOfEvents.add(new Event());
-		arrayListOfEvents.add(new Event());
-		BufferedWriter buffWriter=null;
-		FileWriter fileWriter=null;
-		try{
-			File file = new File("C://Users//admin 231116//Desktop//DATABASE.txt");
-			String textToBeWritten="";
-			for (Event event : arrayListOfEvents) {
-				textToBeWritten=textToBeWritten+"*"+gson.toJson(event);
-			}
-			fileWriter = new FileWriter(file.getAbsoluteFile());
-			buffWriter = new BufferedWriter(fileWriter);
-			buffWriter.write(textToBeWritten);
-			buffWriter.flush();
-		}catch(IOException e){
+		} catch(IOException e){
 			e.printStackTrace();}
-		finally{
-			if(buffWriter!=null ){
-				try {
-					buffWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}if(fileWriter != null){
-				try {
-					fileWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+
+		return listFromFile;
+	}
+
+
+
+
+
+	public void writeJson(ArrayList<Event> eventsList){
+		try{
+			BufferedWriter buffWriter = new BufferedWriter (new FileWriter(FILE));
+			Gson gson = new Gson();
+			java.lang.reflect.Type type = new TypeToken<ArrayList<Event>>(){}.getType();
+
+			String json = gson.toJson(eventsList, type);
+			buffWriter.append(json);
+			buffWriter.newLine();
+			buffWriter.close();
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
+
+
+	public Event getByName(String userInput) throws NoSuchEventException{
+		Event eventToReturn = null;
+		FileOperator fileOperator = new FileOperator();
+		ArrayList<Event> dataFromJson= fileOperator.readJson();
+		for (Event event : dataFromJson) {
+			if(event.getName().equals(userInput)){
+				eventToReturn=event;
+			}
+		}
+
+		if(eventToReturn==null){
+			throw new NoSuchEventException();
+		}
+		return eventToReturn;
+	}
+
+
+	public void deleteEvent(String userInput){
+		FileOperator fileOperator = new FileOperator();
+		ArrayList<Event> dataFromJson=fileOperator.readJson();
+		Event eventToDelete=null;
+
+		try {
+			eventToDelete=fileOperator.getByName(userInput);
+			for(int i=0;i<dataFromJson.size();i++){
+				if(dataFromJson.get(i).equals(eventToDelete)){
+					dataFromJson.remove(i);
+				}
+			}
+		} catch (NoSuchEventException e) {
+			e.printStackTrace();
+		}finally{
+			fileOperator.writeJson(dataFromJson);
+		}
+	}
+
+	public void addEvent(){
+
+	}
+
+
 }
