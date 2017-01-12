@@ -21,7 +21,6 @@ public class Mainclass {
 			break;
 		case "print":
 			PrintEvents printEvents = new PrintEvents(fileOperator);
-			
 			invoker = new Invoker(printEvents);
 			invoker.press();
 		case "add":

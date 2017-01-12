@@ -198,13 +198,14 @@ public class FileOperator {
 		}
 		
 		scan.close();
-		
-		
-		
-		
-
 	}
 
+	public void printCalendar(){
+		FileOperator fileOperator = new FileOperator();
+		ArrayList<Event> dataFromJson=fileOperator.readJson();
+		
+		
+	}
 
 
 

@@ -4,6 +4,7 @@ import event.FileOperator;
 
 public class AddEvent implements Command {
 	FileOperator fileOperator = new FileOperator();
+	
 	 String date; 
 	 String name;
 	 String description;
