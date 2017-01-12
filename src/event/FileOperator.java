@@ -24,7 +24,7 @@ import exceptions.WrongOptionException;
 import validations.DateValidator;
 
 public class FileOperator {
-	public static final String FILE="C://Users//admin 231116//Desktop//DATABASE.txt";
+	public static final String FILE="data.txt";
 
 
 	public ArrayList<Event> readJson(){
@@ -93,6 +93,7 @@ public class FileOperator {
 				if(dataFromJson.get(i).equals(eventToDelete)){
 					dataFromJson.remove(i);
 				}
+			System.out.println("Event " + eventToDelete.getName() + " was deleted");
 			}
 		} catch (NoSuchEventException e) {
 			System.out.println("No such event in the database!");
