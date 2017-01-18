@@ -2,20 +2,23 @@ package commands;
 
 import event.FileOperator;
 
-public class AddEvent implements Command {
-	FileOperator fileOperator = new FileOperator();
+public class AddEvent extends Command {
 	
-	 String date; 
-	 String name;
-	 String description;
-	 String type;
-	 String marker;
+	 private String date; 
+	 private String name;
+	 private String description;
+	 private String type;
+	 private String marker;
 
 	
-	
+	public AddEvent(FileOperator fileOperator, String date , String name){
+		super(fileOperator);
+		this.date=date;
+		this.name=name;
+	}
 	
 	public AddEvent(FileOperator fileOperator, String date, String name, String description, String type, String marker ) {
-	this.fileOperator=fileOperator;
+	super(fileOperator);
 	this.date=date;
 	this.name=name;
 	this.description=description;
@@ -28,7 +31,9 @@ public class AddEvent implements Command {
 
 	@Override
 	public void execute() {
-		fileOperator.addEvent(date, name, description, type, marker);
+		if(this.marker==null){
+			fileOperator.addEvent(date, name);
+		}else fileOperator.addEvent(date, name, description, type, marker);
 	}
 
 }

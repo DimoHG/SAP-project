@@ -2,13 +2,12 @@ package commands;
 
 import event.FileOperator;
 
-public class PrintEvents implements Command {
+public class PrintEvents extends Command {
 
-	private FileOperator fileOperator;
 	
 	
 	public PrintEvents(FileOperator fileOperator){
-		this.fileOperator=fileOperator;
+	super(fileOperator);
 	}
 	
 	

@@ -2,20 +2,20 @@ package commands;
 
 import event.FileOperator;
 
-public class UpdateEvent implements Command {
+public class UpdateEvent extends Command {
 
-	private FileOperator fileOperator = new FileOperator();
-	String eventName;
+	private String[] arguments;
 	
-	public UpdateEvent(FileOperator fileOperator, String eventName) {
-		this.fileOperator = fileOperator;
-		this.eventName=eventName;
+	public UpdateEvent(FileOperator fileOperator, String[] arguments) {
+		super(fileOperator);
+		this.arguments=arguments;
+		
 	}
 
 
 	@Override
 	public void execute() {
-		fileOperator.updateEvent(eventName);
+		fileOperator.updateEvent(arguments);
 	}
 
 }

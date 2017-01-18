@@ -2,20 +2,19 @@ package commands;
 
 import event.FileOperator;
 
-public class DeleteEvent implements Command{
-	private FileOperator fileOperator;
-	private String userInput;
+public class DeleteEvent extends Command{
+	private String eventName;
 	
 	
-	public DeleteEvent(FileOperator fileOperator,String userInput){
-		this.fileOperator=fileOperator;
-		this.userInput=userInput;
+	public DeleteEvent(FileOperator fileOperator,String eventName){
+		super(fileOperator);
+		this.eventName=eventName;
 	}
 	
 	
 	@Override
 	public void execute() {
-		fileOperator.deleteEvent(userInput);
+		fileOperator.deleteEvent(eventName);
 	}
 	
 

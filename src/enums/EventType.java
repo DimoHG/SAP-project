@@ -19,16 +19,5 @@ TASK("Task");
 	 }
 	 
 	 
-	public static EventType typeValidation(String userInput) throws NoSuchTypeException{
-		userInput=userInput.toLowerCase();
-		if(userInput.equals("task")){
-			EventType taskType = EventType.TASK;
-			return taskType;
-		}else if(userInput.equals("meeting")){
-			EventType meetingType = EventType.MEETING;
-			return meetingType;
-		}else throw new NoSuchTypeException();
-		
-		
-	}
+	
 }

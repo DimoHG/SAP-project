@@ -1,9 +1,6 @@
 package event;
 
 import java.util.Date;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import enums.EventMarker;
 import enums.EventType;
 public class Event {
@@ -15,7 +12,8 @@ public class Event {
 
 
 
-public Event (String name){
+public Event (Date date,String name){
+	this.date=date;
 	this.name=name;
 }
 public Event(Date date, String name, String describtion, EventType type, EventMarker marker) {
